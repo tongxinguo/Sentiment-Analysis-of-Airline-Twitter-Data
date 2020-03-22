@@ -13,43 +13,42 @@ Load the data set and import the libraries.
 Set sentiment value and combine the two datasets.
 
 ### Construct Document-Term matrix
- a. Create corpus using tweet data
+##### a. Create corpus using tweet data
 
-b. Vocabulary-based vectorization
-
+##### b. Vocabulary-based vectorization
 Define preprocessing function and tokenization function using text2vec
 
-c. Construct document-term matrix
+##### c. Construct document-term matrix
 
-d. Convert document term matrix to matrix and factorize the sentiment column
+##### d. Convert document term matrix to matrix and factorize the sentiment column
 
-e. Get the random sample in order to separate the dataset into training set and testing set
+##### e. Get the random sample in order to separate the dataset into training set and testing set
 
 ### Model Training and Evaluation
 In this part, I train the model using SVM and NB models, and select the best performed
 model by comparing the model evaluation indexes.
 
-a. Define evaluation function to get precision, recall, F1 score, and accuracy
+##### a. Define evaluation function to get precision, recall, F1 score, and accuracy
 
-b. Training and testing through Support Vector Machine model
+##### b. Training and testing through Support Vector Machine model
 ![precision](image/svm.png)
 
-c. Training and testing through Naïve Bayesion
+##### c. Training and testing through Naïve Bayesion
 ![precision](image/final.png)
 
 By comparing the performance, we choose SVM as the final model because of the higher
 accuracy and F1 score.
 
 ### Predict on new data
-a. Load data
+##### a. Load data
 
-b. Corpus construction and Vocabulary-based vectorization
+##### b. Corpus construction and Vocabulary-based vectorization
 ![precision](image/dictionary.png)
 
-c. Construct DTM and convert it to matrix
+##### c. Construct DTM and convert it to matrix
 ![precision](image/dtm.png)
 
-d. Get classification using SVM
+##### d. Get classification using SVM
 
 
 ## 3. classification precision
