@@ -11,7 +11,7 @@ adopt the best performed model on new Twitter data and report the precision of t
 ### Data preprocessing
 Load the data set and import the libraries.
 Set sentiment value and combine the two datasets.
-```
+```{r}
 #####Combine two dataset############
 #set 1 as negative, 0 as non-negative
 complaint$sentiment <- 1
@@ -26,7 +26,7 @@ tweettext <- iconv(tweets$tweet,"WINDOWS-1252","UTF-8")
 ##### b. Vocabulary-based vectorization
 Define preprocessing function and tokenization function using text2vec
 
-```
+```{r}
 #deine preprocessing function and tokenization fucntion using text2vec
 it_train = itoken(tweettext,preprocessor = tolower,
                   tokenizer = word_tokenizer,
@@ -46,7 +46,7 @@ pruned_vocab = prune_vocabulary(vocab,
 ```
 
 ##### c. Construct document-term matrix
-```
+```{r}
 dtm.control = list(dictionary=pruned_vocab$term, tolower=T,
                    removePunctuation=T, removeNumbers=T,
                    stopwords=c(mystop,stopwords('english'), stopwords('spanish'),
@@ -57,7 +57,7 @@ dtm = DocumentTermMatrix(docs, control=dtm.control)
 ```
 
 ##### d. Convert document term matrix to matrix and factorize the sentiment column
-```
+```{r}
 #convert dtm to matrix
 X <- as.matrix(dtm)
 #factorize sentiment
@@ -71,7 +71,7 @@ In this part, I train the model using SVM and NB models, and select the best per
 model by comparing the model evaluation indexes.
 
 ##### a. Define evaluation function to get precision, recall, F1 score, and accuracy
-```
+```{r}
 Evaluation <- function(pred, true, class)
 {
 
@@ -92,7 +92,7 @@ Evaluation <- function(pred, true, class)
 ```
 
 ##### b. Training and testing through Support Vector Machine model
-```
+```{r}
 svm.model <- svm(Y[train] ~ ., data = X[train,], kernel='linear')
 pred <- predict( svm.model, X[-train,] )
 pred.class <- as.numeric( pred>0.98 )
@@ -103,7 +103,7 @@ Evaluation(pred.class, Y[-train], 0)
 ![precision](image/svm.png)
 
 ##### c. Training and testing through Naïve Bayesion
-```
+```{r}
 nb.model <- naiveBayes(X[train,], Y[train])
 pred1 <- predict(nb.model, X[-train,])
 table(pred1, Y[-train])
@@ -119,7 +119,7 @@ accuracy and F1 score.
 ##### a. Load data
 
 ##### b. Corpus construction and Vocabulary-based vectorization
-```
+```{r}
 #construct corpus
 docs.test <- Corpus(VectorSource(temp$tweet))
 it_test = itoken(tweettext,preprocessor = tolower,
@@ -136,7 +136,7 @@ pruned_vocab = prune_vocabulary(vocab,
 
 ##### c. Construct DTM and convert it to matrix
 ![precision](image/dtm.png)
-```
+```{r}
 # construct dtm
 dtm.control = list(dictionary=pruned_vocab$term,
                    tolower=T, removePunctuation=T, removeNumbers=T,
@@ -148,7 +148,7 @@ dtm.test <- DocumentTermMatrix(docs.test, dtm.control)
 dtm.test.matrix <- as.matrix(dtm.test)
 ```
 ##### d. Get classification using SVM
-```
+```{r}
 #prediction using SVM (because of the higher accuracy)
 pred <- predict( svm.model, dtm.test.matrix )
 pred.class <- as.numeric( pred>0.99 )
